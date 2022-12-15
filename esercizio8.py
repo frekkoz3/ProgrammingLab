@@ -39,7 +39,7 @@ class Square:
     def __init__(self, lato):
         self.lato = lato
 
-    def drawrandomrquare(self):
+    def drawrandomsquare(self):
         
         t = turtle.Turtle()
         t.hideturtle()
@@ -54,9 +54,9 @@ class Square:
                 p = Pixel()
                 color = RandomRGBColor()
                 p.draw(color, t, 5)
-                
-        time.sleep(10)  
-        t.bye()
+
+        time.sleep(1000)
+        t.clear()
 
     def drawredvariantsquare(self):
         t = turtle.Turtle()
@@ -75,8 +75,7 @@ class Square:
                 p = Pixel()
                 p.draw(color, t, 5)
                 color.red = color.red + 1
-                
-        time.sleep(10)  
+
         t.bye()
 
     def drawgreenvariantsquare(self):
@@ -96,8 +95,7 @@ class Square:
                 p = Pixel()
                 p.draw(color, t, 5)
                 color.green = color.green + 1
-                
-        time.sleep(10)  
+
         t.bye()
 
     def drawbluevariantsquare(self):
@@ -118,7 +116,6 @@ class Square:
                 p.draw(color, t, 5)
                 color.blue = color.blue + 1
                 
-        time.sleep(10)  
         t.bye()
 
     def drawgrayvariantsquare(self):
@@ -140,8 +137,29 @@ class Square:
                 color.green = color.green + 1
                 color.blue = color.blue + 1
                 
-        time.sleep(10)  
         t.bye()
-         
-square = Square(16)
-square.drawgrayvariantsquare()
+
+    def drawredscalesquare(self):
+        t = turtle.Turtle()
+        t.hideturtle()
+        t.speed(0)
+
+        color = RGBColor(0, 255, 255)
+        
+        for i in range (self.lato):
+            for j in range (self.lato):
+                t.up()
+                t.goto(i*5, j*5)
+                t.down()
+                
+                p = Pixel()
+                p.draw(color, t, 5)
+                color.red = color.red + 1
+                #color.green = color.green + 1
+                #color.blue = color.blue + 1
+                
+        t.bye()
+
+for i in range (10):
+    square = Square(16)
+    square.drawrandomsquare()

@@ -220,7 +220,6 @@ class NumericalCSVFile(CSVFile):
     def get_data(self, *args, **kwargs):
         data_str = super().get_data(*args, **kwargs)
         data_num = []
-        print("ciao!!!")
         for row_str in data_str:
             row_num = []
             for i, data in enumerate(row_str):

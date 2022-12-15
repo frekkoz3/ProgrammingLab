@@ -32,13 +32,11 @@ class IncrementModel(Model):
         
         prev_item = data[0]
         sum = 0
-        
         for item in data[1:]:
-            
             try:
                 item = float(item)
             except:
-                raise TypeError('Error: Element not convertible into float')
+                raise ModelError('Error: Element not convertible into float')
             
             sum = sum + (item - prev_item)
             prev_item = item
