@@ -6,3 +6,9 @@ for i in range (614):
     f.write(".000")
     
 f.write("\n")
+
+g = open("vibez.txt", "w")
+for i in range(1, 73):
+    g.write("Vibez\n")
+
+         

@@ -5,6 +5,7 @@ from esercizio7 import FitIncrementModel
 #shampoo_sales.csv ed inoltre 
 #ci abbina un po' tutte le predizioni che vogliamo 
 #fatte con la 
+
 name = 'shampoo_sales.csv'
 file = NumericalCSVFile(name)
 data = file.get_data()

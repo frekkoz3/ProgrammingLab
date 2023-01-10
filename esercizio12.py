@@ -38,7 +38,7 @@ n = int(input("inserisci n:"))
 
 list = [[j*2+1 for j in range (0, i)] for i in range(1, n)]
 c_tot = [sum([bisearch(item, 0, len(item)-1, i, 0)[1] for i in range (0,item[-1]+2)])/(item[-1]+2) for item in list]
-    
+
 from matplotlib import pyplot
 
 pyplot.ylim(0,n)

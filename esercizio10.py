@@ -11,8 +11,15 @@ class Model():
         #predict non implementato nella classe madre
         raise NotImplementedError('Method not implemented yet')
 
+    def evaluate(self, data):
+        #evaluate non implementato nella classe madre
+        raise NotImplementedError('Method not implemented yet')
+
 class IncrementModel(Model):
 
+    def __init__(self, window):
+        self.window = window
+        
     def comp_avg_increment(self, data):
         #primo errore possibile: DATA non è una lista
         if not isinstance(data, list):
@@ -52,6 +59,24 @@ class IncrementModel(Model):
 
         return pred_value
 
+    def evaluate(self, test_dataset):
+
+        prediction_values = []
+        expected_values = []
+
+        print(test_dataset)
+
+        for i in range (0, len(test_dataset) - self.window):
+            prediction_values.append(self.predict(test_dataset[i:self.window+i]))
+            expected_values.append(test_dataset[self.window+i])
+
+        somma_errori = 0
+
+        for i in range (0, len(prediction_values)):
+            somma_errori += abs(expected_values[i] - prediction_values[i])
+
+        return somma_errori/len(prediction_values)
+        
 class FitIncrementModel(IncrementModel):
 
     def fit(self, data):
@@ -63,8 +88,18 @@ class FitIncrementModel(IncrementModel):
         #la eseguo per prima
         increment = self.comp_avg_increment(data)
         pred_value = data[-1] + (increment + self.global_avg_increment)/2
-
         return pred_value
 
 #gli slicing avvengono all'esterno della funzione
 #fit e predict sono i più generali possibili
+
+training_set = [8, 19, 31, 41, 50, 52, 60]
+test_set = [67, 72, 72, 67, 72]
+
+my_modelA = IncrementModel(3)
+
+my_modelB = FitIncrementModel(3)
+my_modelB.fit(training_set)
+
+print(my_modelA.evaluate(test_set))
+print(my_modelB.evaluate(test_set))
