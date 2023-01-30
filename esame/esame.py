@@ -12,7 +12,7 @@ def compute_max_difference(day):
 
 def compute_daily_max_difference(time_series):
 
-    #controllino 
+    #controllino sul tipo di time_series (fa mai male)
     if not isinstance(time_series, list):
         raise ExamException('time_series non contenuti in una lista')
     
@@ -28,7 +28,7 @@ def compute_daily_max_difference(time_series):
             current_epoch = row[0]
             temperature = row[1]
             #questo mi dice quanto mi manca ad arrivare al prossimo giorno
-            rest = current_epoch%86400
+            rest = 86400 - current_epoch%86400
             day = []
             day.append(temperature)
 
@@ -46,7 +46,7 @@ def compute_daily_max_difference(time_series):
 
             #epoch di uno stesso giorno
             if epoch - current_epoch < rest:
-                rest = epoch%86400
+                rest = 86400 - current_epoch%86400
                 #qui devo aggiungere la temperatura al giorno 
                 temperature = row[1]
                 day.append(temperature)
@@ -54,7 +54,9 @@ def compute_daily_max_difference(time_series):
             #epoch di giorni diversi
             else :
                 days.append(day)
-                rest = epoch%86400
+                print(day)
+                print()
+                rest = 86400 - current_epoch%86400
                 #qui devo creare nuovo giorno
                 day = []
                 temperature = row[1]
@@ -76,7 +78,7 @@ def compute_daily_max_difference(time_series):
 
             #epoch di uno stesso giorno
             if epoch - current_epoch < rest:
-                rest = epoch%86400
+                rest = 86400 - current_epoch%86400
                 #qui devo aggiungere la temperatura al giorno 
                 temperature = row[1]
                 day.append(temperature)
@@ -84,7 +86,7 @@ def compute_daily_max_difference(time_series):
             #epoch di giorni diversi
             else :
                 days.append(day)
-                rest = epoch%86400
+                rest = 86400 - current_epoch%86400
                 #qui devo creare nuovo giorno
                 day = []
                 temperature = row[1]
