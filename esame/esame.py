@@ -1,6 +1,5 @@
 from CSVTimeSeriesFile import TimeSeriesCSVFile
 
-
 class ExamException(Exception): 
     pass
 
@@ -8,7 +7,7 @@ def compute_max_difference(day):
     if len(day) == 1:
         return None
     else:
-        return abs(max(day) - min(day))
+        return round(abs(max(day) - min(day)), 3)
 
 def compute_daily_max_difference(time_series):
 
@@ -18,45 +17,35 @@ def compute_daily_max_difference(time_series):
     
     #mi divido i timeseries per giorni
     days = []
-    current_epoch, temperature, rest = '', '', 0
     dim = len(time_series)
     
     for i, row in enumerate(time_series):
 
         #caso in cui ci troviamo alla prima riga
         if i == 0:
-            current_epoch = row[0]
             temperature = row[1]
+            epoch = row[0]
             #questo mi dice quanto mi manca ad arrivare al prossimo giorno
-            rest = 86400 - current_epoch%86400
+            day_start_epoch = epoch - (epoch % 86400)
             day = []
             day.append(temperature)
 
         #tutte le righe di mezzo 
         elif i < (dim - 1): 
             epoch = row[0]
-            #i due errori che mi possono occorrere
-       
-            #un epoch duplicata
-            if epoch - current_epoch == 0:
-                raise ExamException('Epoch duplicata')
-            #un epoch fuoriposto
-            if epoch - current_epoch < 0:
-                raise ExamException('Epoch fuoriposto')
 
             #epoch di uno stesso giorno
-            if epoch - current_epoch < rest:
-                rest = 86400 - current_epoch%86400
+            if epoch - day_start_epoch < 86400:
                 #qui devo aggiungere la temperatura al giorno 
                 temperature = row[1]
                 day.append(temperature)
 
             #epoch di giorni diversi
-            else :
+            elif epoch - day_start_epoch >= 86400:
                 days.append(day)
                 print(day)
                 print()
-                rest = 86400 - current_epoch%86400
+                day_start_epoch = epoch - (epoch % 86400)
                 #qui devo creare nuovo giorno
                 day = []
                 temperature = row[1]
@@ -67,18 +56,9 @@ def compute_daily_max_difference(time_series):
         #caso dell'ultima riga
         else:
             epoch = row[0]
-             #i due errori che mi possono occorrere
-       
-            #un epoch duplicata
-            if epoch - current_epoch == 0:
-                raise ExamException('Epoch duplicata')
-            #un epoch fuoriposto
-            if epoch - current_epoch < 0:
-                raise ExamException('Epoch fuoriposto')
 
             #epoch di uno stesso giorno
-            if epoch - current_epoch < rest:
-                rest = 86400 - current_epoch%86400
+            if epoch - day_start_epoch < 86400:
                 #qui devo aggiungere la temperatura al giorno 
                 temperature = row[1]
                 day.append(temperature)
@@ -86,7 +66,6 @@ def compute_daily_max_difference(time_series):
             #epoch di giorni diversi
             else :
                 days.append(day)
-                rest = 86400 - current_epoch%86400
                 #qui devo creare nuovo giorno
                 day = []
                 temperature = row[1]

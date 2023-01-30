@@ -224,6 +224,14 @@ class TimeSeriesCSVFile(CSVFile):
             except:
                 pass #così mi rimuovo le righe che contengono cose brutte
 
+        #gestisco i due possibili errori nel get data
+        for i, rows in enumerate(sanitized_data):
+            if i > 1:
+                if sanitized_data[i-1][0] == rows[0]:
+                    raise ExamException('Echop duplicato')
+                if sanitized_data[i-1][0] > rows[0]:
+                    raise ExamException('Echop fuoriposto')
+                    
         return sanitized_data
     
 m = TimeSeriesCSVFile('data.csv')
