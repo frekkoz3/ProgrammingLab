@@ -1,5 +1,6 @@
 from CSVTimeSeriesFile import TimeSeriesCSVFile
 
+
 class ExamException(Exception): 
     pass
 
@@ -7,9 +8,14 @@ def compute_max_difference(day):
     if len(day) == 1:
         return None
     else:
-        return abs(max(day)) - abs(min(day))
+        return abs(max(day) - min(day))
 
 def compute_daily_max_difference(time_series):
+
+    #controllino 
+    if not isinstance(time_series, list):
+        raise ExamException('time_series non contenuti in una lista')
+    
     #mi divido i timeseries per giorni
     days = []
     current_epoch, temperature, rest = '', '', 0
@@ -98,6 +104,8 @@ m = TimeSeriesCSVFile('data.csv')
 
 days = compute_daily_max_difference(m.get_data())
 
+output = open('output', 'w')
 for day in days:
-    print(day)
+    output.write(str(day))
+    output.write('\n')
         
