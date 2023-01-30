@@ -227,5 +227,3 @@ class TimeSeriesCSVFile(CSVFile):
         return sanitized_data
     
 m = TimeSeriesCSVFile('data.csv')
-
-print(m.get_data())
