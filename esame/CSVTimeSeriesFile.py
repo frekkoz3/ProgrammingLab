@@ -7,7 +7,7 @@ class CSVFile:
 
         #con il type() verifico che il nome sia una stringa
         
-        if not type(name) == str :
+        if not isinstance(name, str):
             raise ExamException()
 
         #inzializzo self.name a name
@@ -212,18 +212,19 @@ class TimeSeriesCSVFile(CSVFile):
 
     def get_data(self):
         data = super().get_data(None, None)
-
+        sanitized_data = []
         for rows in data:
             try: 
                 rows[0] = int(rows[0])
-            except:
-                raise ExamException('epoch non di tipo intero')
-            try:
                 rows[1] = float(rows[1])
+                sanitized_row = []
+                sanitized_row.append(rows[0])
+                sanitized_row.append(rows[1])
+                sanitized_data.append(sanitized_row)    
             except:
-                raise ExamException('temperatura non valida')
+                pass #così mi rimuovo le righe che contengono cose brutte
 
-        return data
+        return sanitized_data
     
 m = TimeSeriesCSVFile('data.csv')
 
