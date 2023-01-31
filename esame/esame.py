@@ -7,7 +7,7 @@ def compute_max_difference(day):
     if len(day) == 1:
         return None
     else:
-        return round(abs(max(day) - min(day)), 3)
+        return abs(max(day) - min(day))
 
 def compute_daily_max_difference(time_series):
 
@@ -51,8 +51,6 @@ def compute_daily_max_difference(time_series):
                 temperature = row[1]
                 day.append(temperature)
 
-            current_epoch = epoch
-
         #caso dell'ultima riga
         else:
             epoch = row[0]
@@ -85,6 +83,7 @@ m = TimeSeriesCSVFile('data.csv')
 
 days = compute_daily_max_difference(m.get_data())
 
+print(days)
 output = open('output', 'w')
 for day in days:
     output.write(str(day))
