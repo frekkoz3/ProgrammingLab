@@ -4,13 +4,11 @@ class ExamException(Exception):
 class CSVFile:
     
     def __init__(self, name):
-        
         if not isinstance(name, str):
             raise ExamException()
         self.name = name
 
     def get_data(self, start=None, end=None): 
-            
         try:
             my_file = open(self.name, 'r')
         except:
@@ -25,7 +23,6 @@ class CSVFile:
             
         if start == None and end == None:
             return data[1:]
-
         if start == 0:
             raise ExamException('Errore Logico-Matematico: Start value 0')
 
