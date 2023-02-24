@@ -1,4 +1,7 @@
 import math
+#if u wanna plot import also this one
+#from matplotlib import pyplot
+
 #function that moves a given element to the right by a given number of spaces (swaps position with the element in the target position)
 def move_left(key, start, step):
     bound = len(key)
@@ -31,12 +34,13 @@ def primes(n):
         else:
             i = i+1
     return divisors
-    
+
+lower_bound = int(input("insert lower bound: "))
 #upper_bound of the test
-upper_bound = 20
+upper_bound = int(input("insert upper bound: "))
 
 #list of the bounds that increase from 2 to a given upper_bound minus 1
-bounds = [i for i in range (2, upper_bound)]
+bounds = [i for i in range (lower_bound, upper_bound)]
 
 #gonna iterate over all the possible bound (from 2 to the upper_bound)
 for bound in bounds:
@@ -54,6 +58,7 @@ for bound in bounds:
 
     #gonna record the number of permutations obtainable from the cycle deriving from each possible step
     distribution = {}
+    to_plot = []
     
     for step in steps:
         
@@ -73,14 +78,24 @@ for bound in bounds:
             distribution[count] = []
             distribution[count].append(step)
 
+        to_plot.append(count)
         #print("{} : {}".format(step, count))
 
     print("bound (primes): {} {}".format(bound, primes(bound)))
 
     print(" ↳distribution: ")
+    
     for key, value in distribution.items():
         print("  ↳count (primes): {} {}".format(key, primes(key)))
         print("   ↳steps {}".format(value))
-        
+
+    #to plot the distributions use this (u need matplotlib)
+    #pyplot.suptitle(bound)
+    #pyplot.plot(to_plot, color='tab:blue')
+    #pyplot.show()
     
     print()
+
+#note that the program is not very fast: not too much of a problem since you want to compute a method to solve a problem whose complexity is at best n!
+
+#note again that however thanks to the original keys of the cycles it is possible to deduce entire and entire cycles with single keys by lowering the complexity (that relating to finding the various permutations, not that of calculating them) enormously
